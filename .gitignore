@@ -1,10 +1,34 @@
-HELP.md
+# ------------------------------------
+# Maven & Build
+# ------------------------------------
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+build/
+dependency-reduced-pom.xml
+*.log
+*.class
+*.jar
+*.war
+*.ear
 
-### STS ###
+!src/main/resources/application-sample.properties
+
+# ------------------------------------
+# Ignore your own secret configs
+# ------------------------------------
+src/main/resources/application.properties
+
+# ------------------------------------
+# IntelliJ IDEA
+# ------------------------------------
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ------------------------------------
+# STS (Spring Tool Suite)
+# ------------------------------------
 .apt_generated
 .classpath
 .factorypath
@@ -13,22 +37,35 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+# ------------------------------------
+# VS Code
+# ------------------------------------
+.vscode/
 
-### NetBeans ###
+# ------------------------------------
+# NetBeans
+# ------------------------------------
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
+
+# ------------------------------------
+# OS-Specific
+# ------------------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------------------
+# Exceptions to allow specific targets/builds in source
+# ------------------------------------
+!**/src/main/**/target/
+!**/src/test/**/target/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+<<<<<<< HEAD
 ### VS Code ###
 .vscode/
 
@@ -71,3 +108,9 @@ Thumbs.db
 src/main/resources/application.properties
 
 # Mohammad Saad Khan
+=======
+# ------------------------------------
+# Documentation
+# ------------------------------------
+HELP.md
+>>>>>>> 734999036ae1824443cf1a6ff7cd74cdc1de2d11
