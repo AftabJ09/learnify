@@ -5,9 +5,16 @@ echo "Enter commit message:"
 read message
 echo "-------------------------"
 
-git pull origin main
-git add .
-git commit -m "$message"
-git push
-echo "Updated the repository Successfully"
+echo "📥 Pulling latest changes with rebase..."
+git pull --rebase origin main
 
+echo "📦 Staging changes..."
+git add .
+
+echo "📝 Committing changes..."
+git commit -m "$message"
+
+echo "📤 Pushing to remote..."
+git push
+
+echo "✅ Repository updated successfully!"
