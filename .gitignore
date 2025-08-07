@@ -31,6 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 79907d2dc7851bc2acc2fdb47c34083621619cfe
 # -------------------------------
 # Java + Maven
 # -------------------------------
@@ -68,3 +73,8 @@ Thumbs.db
 # Application Secrets (MySQL creds)
 # -------------------------------
 src/main/resources/application.properties
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 79907d2dc7851bc2acc2fdb47c34083621619cfe
