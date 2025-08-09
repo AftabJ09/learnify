@@ -1,0 +1,57 @@
+/* General background */
+body {
+    background-color: #1a1a1a; /* Dark grey */
+    color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #333 !important;
+}
+.navbar-brand,
+.nav-link {
+    color: #f5c518 !important; /* Yellow text */
+    font-weight: bold;
+}
+.nav-link:hover {
+    color: #fff !important;
+}
+.navbar-toggler {
+    border-color: #f5c518;
+}
+
+/* Headings */
+h1, h5 {
+    color: #f5c518;
+}
+
+/* Cards */
+.card {
+    background-color: #262626;
+    border: 1px solid #444;
+    color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+.card-title {
+    color: #f5c518;
+}
+.card .btn-primary {
+    background-color: #f5c518;
+    border: none;
+    color: #000;
+    font-weight: bold;
+}
+.card .btn-primary:hover {
+    background-color: #e0b500;
+}
+
+/* Footer */
+footer {
+    background-color: #111 !important;
+    color: #f5c518 !important;
+}
