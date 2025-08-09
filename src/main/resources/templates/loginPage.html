@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Signup Page</title>
+    <title>Login Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -20,7 +20,7 @@
     text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
-.signup-container {
+.login-container {
     max-width: 400px;
     margin: 50px auto;
     background: #2c2c2c;
@@ -56,18 +56,18 @@
     background-color: #e0a800;
 }
 
-.login-link {
+.signUp-link {
     text-align: center;
     margin-top: 15px;
     color: white;
 }
 
-.login-link a {
+.signUp-link a {
     color: #ffc107;
     text-decoration: none;
 }
 
-.login-link a:hover {
+.signUp-link a:hover {
     text-decoration: underline;
 }
 
@@ -75,15 +75,10 @@
 </head>
 
 <body>
-<h1 class="site-heading text-center">Welcome to Learnify</h1>
-<div class="signup-container">
-    <h3 class="text-center mb-4">Sign Up</h3>
+<h1 class="site-heading text-center">Welcome Back to Learnify!</h1>
+<div class="login-container">
+    <h3 class="text-center mb-4">Login </h3>
     <form>
-        <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter username" required>
-        </div>
-
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
             <input type="email" class="form-control" id="email" placeholder="Enter email" required>
@@ -94,11 +89,11 @@
             <input type="password" class="form-control" id="password" placeholder="Enter password" required>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
 
-    <div class="login-link">
-        <p>Already have an account? <a href="loginPage.html">Login here</a></p>
+    <div class="signUp-link">
+        <p>Don't have an account? <a href="signUpPage.html">SignUp here</a></p>
     </div>
 </div>
 
