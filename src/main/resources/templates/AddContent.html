@@ -7,7 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/AddContent.css">
 
-    <script src="/js/script.js"></script>
+    <script src="/static/js/AddContent.js" defer></script>
+
 </head>
 <body>
 <nav class="navbar bg-body-tertiary">
@@ -57,17 +58,18 @@
 
 <div class="row">
     <div class="col-10">
-        <div class="content-container border border-dark rounded p-3 w-100">
+        <div class="content-container border border-dark rounded p-3 w-100" id="block-container">
             <!-- Dynamic content here -->
         </div>
     </div>
 
-    <div class="col-2" style="max-width: 250px;"> <!-- custom width -->
+    <div class="col-2" style="max-width: 250px;" id="block-type"> <!-- custom width -->
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">Add Title</a>
-            <a href="#" class="list-group-item list-group-item-action">Add paragraph</a>
-            <a href="#" class="list-group-item list-group-item-action">Add image</a>
-            <a href="#" class="list-group-item list-group-item-action">Embedded video</a>
+            <button onclick="addBlock('title')">Add Title</button>
+            <button onclick="addBlock('subtitle')">Add Subtitle</button>
+            <button onclick="addBlock('paragraph')">Add Paragraph</button>
+            <button>Embedded Video</button>
+            <button onclick="addBlock('image')">Add Image</button>
         </div>
     </div>
 </div>
