@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Page for Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/loginPage.css">
+</head>
+
+<body>
+<h1 class="site-heading text-center">Welcome Back to Learnify!</h1>
+<div class="login-container">
+  <h3 class="text-center mb-4">Login as Admin</h3>
+  <form>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Passkey</label>
+      <input type="password" class="form-control" id="passkey" placeholder="Enter passkey" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+  </form>
+
+  <div class="signUp-link">
+    <p>Not an Admin? Well then you need a Passkey <a href="signUpAdmin.html">SignUp here</a></p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
