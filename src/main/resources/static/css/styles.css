@@ -1,0 +1,19 @@
+.content-container {
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  z-index: 10;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  background: #e0e0e0;
+  border-radius: 10px;
+  height: 450px;
+  margin-left:10px;
+}
+
+.row {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
