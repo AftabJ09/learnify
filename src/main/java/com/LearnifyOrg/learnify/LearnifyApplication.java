@@ -21,8 +21,9 @@ public class LearnifyApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		Learner L =new Learner();
-
-
+		L.setname ("l");
+		L.setemail("sassd@gmail.com");
+		L.setpassword("1234");
 	}
 }
 
