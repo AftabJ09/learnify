@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Preview</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/preview.css">
+</head>
+<body class="p-3">
+<div id="preview-container"></div>
+
+<script>
+  function loadPreview() {
+      const content = localStorage.getItem("previewContent");
+      document.getElementById("preview-container").innerHTML =
+          content || "<p>No preview yet.</p>";
+  }
+  loadPreview();
+
+  // Optional: auto-refresh preview every 1 second
+  setInterval(loadPreview, 1000);
+</script>
+</body>
+</html>
