@@ -1,6 +1,7 @@
 package com.LearnifyOrg.learnify;
 
 import com.LearnifyOrg.learnify.Controller.LearnerController;
+import com.LearnifyOrg.learnify.Entity.Learner;
 import com.LearnifyOrg.learnify.Repository.LearnerRepository;
 import com.LearnifyOrg.learnify.Services.LearnerServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class LearnifyApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		Learner L =new Learner();
+
 
 	}
 }
