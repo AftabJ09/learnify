@@ -18,12 +18,14 @@ public class LearnifyApplication implements CommandLineRunner {
 	@Autowired
 	private LearnerRepository learnerRepository;
 
+
 	@Override
 	public void run(String... args) throws Exception {
-		Learner L =new Learner();
-		L.setname ("l");
-		L.setemail("sassd@gmail.com");
-		L.setpassword("1234");
+		Learner learner=new Learner();
+		learner.setName("Saad");
+		learner.setEmail("Saad@.com");
+		learner.setPassword("12345");
+		learnerRepository.save(learner);
 	}
 }
 

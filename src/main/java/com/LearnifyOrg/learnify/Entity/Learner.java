@@ -6,8 +6,6 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Learner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
