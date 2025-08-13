@@ -35,4 +35,19 @@ public class LearnerServices {
         }
         return learner2;
     }
+
+    public boolean learnerExistsByEmail(String email) {
+        return learnerRepository.existsByEmail(email);
+    }
+
+    public Learner validateLearner(String email, String password) {
+        // Loop through all learners and check email + password match
+        for (Learner learner : learnerRepository.findAll()) {
+            if (learner.getEmail().equalsIgnoreCase(email) && learner.getPassword().equals(password)) {
+                return learner; // Match found
+            }
+        }
+        return null; // No match found
+    }
 }
+
