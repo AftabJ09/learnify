@@ -10,22 +10,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LearnifyApplication implements CommandLineRunner {
+public class LearnifyApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(LearnifyApplication.class, args);
 	}
-	@Autowired
-	private LearnerRepository learnerRepository;
 
 
-	@Override
-	public void run(String... args) throws Exception {
-		Learner learner=new Learner();
-		learner.setName("Saad");
-		learner.setEmail("Saad@.com");
-		learner.setPassword("12345");
-		learnerRepository.save(learner);
-	}
+
 }
 
