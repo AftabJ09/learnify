@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Signup Page For Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/signUpPage.css">
 </head>
 
@@ -12,7 +12,9 @@
 <h1 class="site-heading text-center">Welcome to Learnify</h1>
 <div class="signup-container">
     <h3 class="text-center mb-4">Sign Up As Admin</h3>
-    <form>
+
+    <!-- ✅ Added Passcode field -->
+    <form id="signupForm">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" id="username" placeholder="Enter username" required>
@@ -28,19 +30,55 @@
             <input type="password" class="form-control" id="password" placeholder="Enter password" required>
         </div>
 
+        <!-- ✅ Common passcode field -->
         <div class="mb-3">
-            <label for="password" class="form-label">Passkey</label>
-            <input type="password" class="form-control" id="passkey" placeholder="Enter passkey" required>
+            <label for="passcode" class="form-label">Admin Passcode</label>
+            <input type="password" class="form-control" id="passcode" placeholder="Enter admin passcode" required>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Sign Up</button>
     </form>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent page reload
+
+            const adminData = {
+                name: document.getElementById("username").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value,
+                passcode: document.getElementById("passcode").value // ✅ Send passcode to backend
+            };
+
+            try {
+               const response = await fetch("http://localhost:8080/admin/addAdmin", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(adminData)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert("Admin registered successfully: " + result.name);
+                    window.location.href = "loginPageAdmin.html"; // redirect to login
+                } else {
+                    const errorMsg = await response.text();
+                    alert("Error: " + errorMsg);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Something went wrong!");
+            }
+        });
+    </script>
 
     <div class="login-link">
         <p>Already an Admin? <a href="loginPageAdmin.html">Login here</a></p>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

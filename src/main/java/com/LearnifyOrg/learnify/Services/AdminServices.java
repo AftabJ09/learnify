@@ -9,32 +9,45 @@ import java.util.List;
 
 @Service
 public class AdminServices {
+
     @Autowired
     private AdminRepository adminRepository;
+
+    // 🔑 Common passcode (can be changed only in backend code)
+    private static final String COMMON_PASSCODE = "123456789";
 
     public List<Admin> getAllAdminDetails() {
         return adminRepository.findAll();
     }
 
+    // ✅ Add new admin (signup) with common passcode check
     public Admin addAdmin(Admin admin) {
+        if (!COMMON_PASSCODE.equals(admin.getPasscode())) {
+            throw new RuntimeException("Invalid Admin Passcode!");
+        }
+
+        // Do not store passcode in DB since it's common
+        admin.setPasscode(null);
+
         return adminRepository.save(admin);
     }
 
-    public Admin updateAdminDetails(Admin admin, int adminId) {
-        Admin admin1=adminRepository.findById(adminId).orElse(null);
-        admin1.setAdmin_Id(admin.getAdmin_Id());
-        admin1.setName(admin.getName());
-        admin1.setEmail(admin.getEmail());
-        admin1.setPassword(admin.getPassword());
-        return adminRepository.save(admin1);
+    public Admin updateAdminDetails(Admin admin, int admin_id) {
+        Admin existingAdmin = adminRepository.findById(admin_id).orElseThrow(
+                () -> new RuntimeException("Admin not found with ID: " + admin_id)
+        );
+
+        existingAdmin.setName(admin.getName());
+        existingAdmin.setEmail(admin.getEmail());
+        existingAdmin.setPassword(admin.getPassword());
+
+        return adminRepository.save(existingAdmin);
     }
 
-
-    public Admin deleteAdmin(Admin admin, int adminId) {
-        Admin admin2=adminRepository.findById(adminId).orElse(null);
-        if (admin2 != null){
-            adminRepository.delete(admin2);
+    public void deleteAdmin(int admin_id) {
+        if (!adminRepository.existsById(admin_id)) {
+            throw new RuntimeException("Admin not found with ID: " + admin_id);
         }
-        return admin2;
+        adminRepository.deleteById(admin_id);
     }
 }
