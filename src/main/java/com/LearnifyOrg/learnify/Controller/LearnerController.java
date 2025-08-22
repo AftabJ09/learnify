@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/learner")
+@CrossOrigin(origins = "*")
 public class LearnerController {
     @Autowired
     public LearnerServices learnerServices;
@@ -24,8 +25,16 @@ public class LearnerController {
     }
 
     @PostMapping
-    public ResponseEntity<Learner> addLearner(@RequestBody Learner learner) {
-        return ResponseEntity.ok(learnerServices.addLearner(learner));
+    public ResponseEntity<?> addLearner(@RequestBody Learner learner) {
+        try {
+            Learner savedLearner = learnerServices.addLearner(learner);
+            return ResponseEntity.ok(savedLearner);
+        } catch (RuntimeException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response); // 409 Conflict
+        }
     }
 
     @PutMapping("/{learner_id}")

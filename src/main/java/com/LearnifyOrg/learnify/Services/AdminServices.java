@@ -20,13 +20,20 @@ public class AdminServices {
         return adminRepository.findAll();
     }
 
-    // ✅ Add new admin (signup) with common passcode check
     public Admin addAdmin(Admin admin) {
-        if (!COMMON_PASSCODE.equals(admin.getPasscode())) {
+        String predefinedPasscode = "123456789"; // 🔑 predefined
+
+        // ✅ Validate passcode
+        if (!predefinedPasscode.equals(admin.getPasscode())) {
             throw new RuntimeException("Invalid Admin Passcode!");
         }
 
-        // Do not store passcode in DB since it's common
+        // ✅ Check for existing email before saving
+        if (adminRepository.existsByEmail(admin.getEmail())) {
+            throw new RuntimeException("Admin with this email already exists!");
+        }
+
+        // Do not store passcode in DB (if you want it global only)
         admin.setPasscode(null);
 
         return adminRepository.save(admin);
@@ -50,4 +57,6 @@ public class AdminServices {
         }
         adminRepository.deleteById(admin_id);
     }
+
+
 }

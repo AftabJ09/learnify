@@ -12,7 +12,9 @@
 <h1 class="site-heading text-center">Welcome to Learnify</h1>
 <div class="signup-container">
     <h3 class="text-center mb-4">Sign Up</h3>
-    <form>
+
+    <!-- Add id="signupForm" for JS to target -->
+    <form id="signupForm">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" id="username" placeholder="Enter username" required>
@@ -37,5 +39,46 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript to connect frontend with Spring Boot -->
+<script>
+    document.getElementById("signupForm").addEventListener("submit", async function(event) {
+        event.preventDefault(); // prevent page reload
+
+        // Get form values
+        const name = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        // Prepare request body
+        const learnerData = {
+            name: name,
+            email: email,
+            password: password
+        };
+
+        try {
+            const response = await fetch("http://localhost:8080/learner", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(learnerData)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert("Signup successful!  Welcome to Learnify" + result.name);
+                // Redirect to login page
+                window.location.href = "loginPage.html";
+            } else {
+                alert("Signup failed Please try again.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Something went wrong. Please check backend connection.");
+        }
+    });
+</script>
 </body>
 </html>

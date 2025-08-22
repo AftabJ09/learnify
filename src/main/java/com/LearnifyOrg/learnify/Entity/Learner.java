@@ -12,6 +12,7 @@ public class Learner {
     private int Learner_Id;
 
     private String name;
+    @Column(unique = true, nullable = false)   // ✅ email must be unique
     private String email;
     private String password;
 }

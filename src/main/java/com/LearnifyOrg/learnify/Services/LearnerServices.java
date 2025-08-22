@@ -17,15 +17,21 @@ public class LearnerServices {
     }
 
     public Learner addLearner(Learner learner) {
+        if (learnerRepository.existsByEmail(learner.getEmail())) {
+            throw new RuntimeException("Email already registered!");  // or custom exception
+        }
         return learnerRepository.save(learner);
     }
 
     public Learner updateLearner(Learner learner, int learnerId) {
-        Learner learner1=learnerRepository.findById(learnerId).orElse(null);
-        learner1.setLearner_Id(learner.getLearner_Id());
-        learner1.setEmail(learner.getEmail());
-        learner1.setPassword(learner.getPassword());
-        return learnerRepository.save(learner1);
+        Learner learner1 = learnerRepository.findById(learnerId).orElse(null);
+        if (learner1 != null) {
+            learner1.setName(learner.getName());
+            learner1.setEmail(learner.getEmail());
+            learner1.setPassword(learner.getPassword());
+            return learnerRepository.save(learner1);
+        }
+        return null;
     }
 
     public Learner deleteLearner(int learnerId) {

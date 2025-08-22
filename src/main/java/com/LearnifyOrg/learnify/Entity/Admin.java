@@ -16,6 +16,7 @@ public class Admin {
     private int admin_Id;
 
     private String name;
+    @Column(nullable = false, unique = true) // ✅ ensures no duplicate emails
     private String email;
     private String password;
     private String passcode;
