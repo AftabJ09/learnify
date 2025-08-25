@@ -1,7 +1,5 @@
 package com.LearnifyOrg.learnify.Controller;
-
 import com.LearnifyOrg.learnify.Entity.Learner;
-import com.LearnifyOrg.learnify.Repository.LearnerRepository;
 import com.LearnifyOrg.learnify.Services.LearnerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

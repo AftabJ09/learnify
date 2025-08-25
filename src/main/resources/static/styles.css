@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f5f5f5;
+}
+
+.container {
+  max-width: 700px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+input[type="text"],
+#imageInput {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 200px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: #007acc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #005fa3;
+}
+
+.blog-content {
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+  color: #333;
+  margin-top: 10px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.blog-content h2 {
+  margin-bottom: 0.5em;
+  color: #222;
+}
+
+img {
+  max-width: 50%;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  align-items:center;
+}
+
+.blog-content img {
+  max-width: 50%;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  align-items:center;
+}
