@@ -1,0 +1,85 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f5f5f5;
+}
+
+.container {
+  max-width: 700px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+input[type="text"],
+#imageInput,
+.form-select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: #007acc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #005fa3;
+}
+
+.blog-content {
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+  color: #333;
+  margin-top: 10px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.blog-content h2 {
+  margin-bottom: 0.5em;
+  color: #222;
+}
+
+#editor {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  overflow-y: auto;
+}
+
+#queriesArea {
+  height: 400px;
+  overflow-y: auto;
+}
+
+#queriesArea div {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+img {
+  max-width: 50%;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

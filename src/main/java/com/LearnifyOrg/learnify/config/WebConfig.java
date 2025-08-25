@@ -1,4 +1,4 @@
-package com.LearnifyOrg.learnify.config; // adjust package as per your project
+package com.LearnifyOrg.learnify.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,14 +11,14 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // apply to all endpoints
-                        .allowedOrigins("http://localhost:63342") // frontend origin
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
+                registry.addMapping("/**")
+                        //.allowedOrigins("*") // ❌ remove this
+                        .allowedOriginPatterns("http://localhost:*") // allow all local ports
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowCredentials(true)
+                        .maxAge(3600);
             }
         };
     }

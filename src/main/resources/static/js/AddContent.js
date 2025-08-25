@@ -1,4 +1,4 @@
-
+script.js
 let blockIndex = 0;
 function addBlock(type) {
 
