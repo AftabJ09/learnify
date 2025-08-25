@@ -5,4 +5,5 @@ import com.LearnifyOrg.learnify.Entity.Subjects;
 @Repository
 public interface SubjectRepository extends JpaRepository<Subjects,Long>{
 
+
 }
