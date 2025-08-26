@@ -83,8 +83,11 @@ async function fetchSections(subjectId) {
         dropdown.innerHTML = `<option value="">Failed to load sections</option>`;
     }
 }
+<<<<<<< HEAD
 
 // Show editor preview
+=======
+>>>>>>> 842064e (Topic Post functionality added)
 function showPreview() {
     const html = quill.root.innerHTML;
     document.getElementById("previewArea").innerHTML = `
@@ -93,6 +96,41 @@ function showPreview() {
             ${html}
         </div>
     `;
+
+}
+function sendTopicContent(){
+    let title = document.getElementById("topicInput").value;
+    let selectedSection = document.getElementById("SectionDropdown").value;
+    const content = quill.getContents();
+    let data = {
+        topic: title,                  // matches TopicContent.topic
+        sections: { sectionId: selectedSection }, // nested section object
+        content: JSON.stringify(content)              // Quill delta JSON
+    };
+    let jsonData = JSON.stringify(data);
+
+    fetch('http://localhost:8080/TopicContent/upload', {
+        method: 'POST',
+        headers: {                        //  must be 'headers', not 'header'
+            'Content-Type': 'application/json', // tell Spring this is JSON
+            'Accept': 'application/json'
+        },
+        body: jsonData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(result => {
+        console.log("Server response:", result);
+        alert("Content uploaded successfully!");
+    })
+    .catch(error => {
+        console.error("Error uploading content:", error);
+        alert("Failed to upload content.");
+    });
 }
 
 // Submit a new query

@@ -1,7 +1,6 @@
 package com.LearnifyOrg.learnify.Entity;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "topic_content")
 public class TopicContent {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "topic_id")
@@ -22,12 +22,10 @@ public class TopicContent {
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "date")
-    private String date;
-
     // Many topics belong to one section
     @ManyToOne
     @JoinColumn(name = "section_id", referencedColumnName = "section_id")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Sections sections;
 }
+
