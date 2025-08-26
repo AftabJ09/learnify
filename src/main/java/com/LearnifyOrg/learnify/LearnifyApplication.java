@@ -16,7 +16,5 @@ public class LearnifyApplication{
 		SpringApplication.run(LearnifyApplication.class, args);
 	}
 
-
-
 }
 
