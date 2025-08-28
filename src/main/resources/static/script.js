@@ -1,5 +1,5 @@
 let quill;
-let learnerId; // Will be fetched from backend automatically
+let learnerId;
 
 document.addEventListener("DOMContentLoaded", async () => {
     // Fetch learnerId from backend
@@ -83,11 +83,7 @@ async function fetchSections(subjectId) {
         dropdown.innerHTML = `<option value="">Failed to load sections</option>`;
     }
 }
-<<<<<<< HEAD
 
-// Show editor preview
-=======
->>>>>>> 842064e (Topic Post functionality added)
 function showPreview() {
     const html = quill.root.innerHTML;
     document.getElementById("previewArea").innerHTML = `
