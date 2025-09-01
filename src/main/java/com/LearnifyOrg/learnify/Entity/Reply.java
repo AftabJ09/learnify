@@ -16,7 +16,13 @@ public class Reply {
     private String reply;
 
     private int learnerId;
-    private int queryId;
+
+    @Column(nullable = false)
+    private String subjectName;
 
     private boolean verify = false;
+
+    @ManyToOne(fetch = FetchType.EAGER)  // <- fetch full query immediately
+    @JoinColumn(name = "query_id", nullable = false)
+    private Query query;
 }
