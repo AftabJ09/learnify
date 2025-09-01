@@ -86,4 +86,55 @@ public class TopicServices {
         if (base64.startsWith("data:image/webp")) return "webp";
         return "png";
     }
+
+    public TopicContent updateTopic(Long id, TopicContent updatedTopic) {
+        TopicContent existing = topicRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Topic not found"));
+
+        // Use same image-processing logic as insertdata
+        try {
+            String contentJson = updatedTopic.getContent();
+            JsonNode root = objectMapper.readTree(contentJson);
+
+            if (root.has("ops") && root.get("ops").isArray()) {
+                for (JsonNode op : root.get("ops")) {
+                    if (op.has("insert")) {
+                        JsonNode insertNode = op.get("insert");
+
+                        if (insertNode.isObject() && insertNode.has("image")) {
+                            String base64Data = insertNode.get("image").asText();
+                            if (base64Data != null && base64Data.startsWith("data:image/")) {
+                                String extension = getExtension(base64Data);
+                                String uniqueName = UUID.randomUUID() + "." + extension;
+
+                                String encodedPart = base64Data.substring(base64Data.indexOf(",") + 1);
+                                byte[] imageBytes = Base64.getDecoder().decode(encodedPart);
+
+                                File uploadDir = new File(UPLOAD_DIR);
+                                if (!uploadDir.exists()) uploadDir.mkdirs();
+
+                                File outputFile = new File(UPLOAD_DIR + uniqueName);
+                                try (FileOutputStream fos = new FileOutputStream(outputFile)) {
+                                    fos.write(imageBytes);
+                                }
+
+                                ((ObjectNode) insertNode).put("image", "/uploads/" + uniqueName);
+                            }
+                        }
+                    }
+                }
+            }
+
+            String updatedJson = objectMapper.writeValueAsString(root);
+            existing.setContent(updatedJson);
+            existing.setTopic(updatedTopic.getTopic());
+            existing.setSections(updatedTopic.getSections());
+
+            return topicRepository.save(existing);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error processing content for update", e);
+        }
+    }
+
 }

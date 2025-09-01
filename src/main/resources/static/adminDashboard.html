@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="adminStyles.css">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <span class="navbar-brand mb-0 h1">Learnify Admin Dashboard</span>
+  </div>
+</nav>
+
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="bg-dark text-white sidebar p-3">
+    <h5 class="text-center mb-4">Menu</h5>
+    <ul class="nav flex-column">
+      <li class="nav-item"><a href="#" class="nav-link text-white" onclick="showSection('subjects')">📚 Subjects</a></li>
+      <li class="nav-item"><a href="#" class="nav-link text-white" onclick="showSection('sections')">📖 Sections</a></li>
+      <li class="nav-item"><a href="#" class="nav-link text-white" onclick="showSection('topics')">📝 Topics</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container-fluid p-4">
+    <!-- Subjects Section -->
+    <div id="subjects" class="dashboard-section">
+      <h2 class="mb-4">Manage Subjects</h2>
+      <div class="card p-3 mb-3 shadow">
+        <div class="d-flex gap-2">
+          <input type="text" id="subjectName" class="form-control" placeholder="Enter subject name">
+          <button class="btn btn-primary" onclick="addSubject()">Add</button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Subject Name</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody id="subjectTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Sections Section -->
+    <div id="sections" class="dashboard-section d-none">
+      <h2 class="mb-4">Manage Sections</h2>
+      <div class="card p-3 mb-3 shadow">
+        <div class="row g-2">
+          <div class="col-md-4">
+            <select id="sectionSubject" class="form-select"></select>
+          </div>
+          <div class="col-md-6">
+            <input type="text" id="sectionName" class="form-control" placeholder="Enter section name">
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-success w-100" onclick="addSection()">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Section Name</th>
+            <th>Subject</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody id="sectionTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Topics Section Placeholder -->
+    <div id="topics" class="dashboard-section d-none">
+      <h2>Topics Management Coming Soon!</h2>
+    </div>
+  </div>
+</div>
+
+<script src="adminDashScript.js"></script>
+</body>
+</html>
