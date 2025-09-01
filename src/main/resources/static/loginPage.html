@@ -34,47 +34,47 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.querySelector("form").addEventListener("submit", async function (event) {
-      event.preventDefault();
+        event.preventDefault();
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
 
-      if (!email || !password) {
-        alert("Please enter both email and password.");
-        return;
-      }
-
-      try {
-        const response = await fetch("http://localhost:8081/learner/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
-        });
-
-        // Safely parse JSON or text
-        let data;
-        const ct = response.headers.get("content-type") || "";
-        if (ct.includes("application/json")) {
-          data = await response.json();
-        } else {
-          data = { success: false, message: await response.text() };
+        if (!email || !password) {
+            alert("Please enter both email and password.");
+            return;
         }
 
-        if (response.ok && data.success) {
-          // Save auth context for index.html access control
-          localStorage.setItem("learnerId", data.learnerId);
-          localStorage.setItem("learnerEmail", data.learner_email);
-          localStorage.setItem("learnerName", data.learner_name);
+        try {
+            const response = await fetch("http://localhost:8081/learner/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include", // important for session cookie
+                body: JSON.stringify({ email, password })
+            });
 
-          alert("Login successful! Welcome " + data.learner_name);
-          window.location.href = "index.html";
-        } else {
-          alert("Login failed: " + (data.message || "Invalid credentials"));
+            let data;
+            const ct = response.headers.get("content-type") || "";
+            if (ct.includes("application/json")) {
+                data = await response.json();
+            } else {
+                data = { success: false, message: await response.text() };
+            }
+
+            if (response.ok && data.success) {
+                // Optional: store in localStorage for quick access
+                localStorage.setItem("learnerId", data.learnerId);
+                localStorage.setItem("learnerEmail", data.learner_email);
+                localStorage.setItem("learnerName", data.learner_name);
+
+                alert("Login successful! Welcome " + data.learner_name);
+                window.location.href = "LearnerDashBoard.html";
+            } else {
+                alert("Login failed: " + (data.message || "Invalid credentials"));
+            }
+        } catch (err) {
+            console.error("Login error:", err);
+            alert("Something went wrong. Ensure the backend is running on port 8081 and CORS allows credentials.");
         }
-      } catch (err) {
-        console.error("Login error:", err);
-        alert("Something went wrong. Check that the backend is running on :8080 and CORS is enabled.");
-      }
     });
 </script>
 </body>

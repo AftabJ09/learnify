@@ -1,6 +1,7 @@
 package com.LearnifyOrg.learnify.Controller;
 import com.LearnifyOrg.learnify.Entity.Learner;
 import com.LearnifyOrg.learnify.Services.LearnerServices;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,9 +56,8 @@ public class LearnerController {
 
         return ResponseEntity.ok(response);
     }
-
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> loginLearner(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<Map<String, Object>> loginLearner(@RequestBody Map<String, String> payload, HttpSession session) {
 
         String email = payload.get("email");
         String password = payload.get("password");
@@ -73,6 +73,11 @@ public class LearnerController {
         Learner learner = learnerServices.validateLearner(email, password);
 
         if (learner != null) {
+            // Set session here
+            session.setAttribute("learnerId", learner.getLearner_Id());
+            session.setAttribute("learnerEmail", learner.getEmail());
+            session.setAttribute("learnerName", learner.getName());
+
             response.put("success", true);
             response.put("learner_name", learner.getName());
             response.put("learnerId", learner.getLearner_Id());
@@ -84,5 +89,28 @@ public class LearnerController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
+    @GetMapping("/session")
+    public ResponseEntity<Map<String, Object>> getSession(HttpSession session) {
+        Map<String, Object> sessionData = new HashMap<>();
 
+        if (session.getAttribute("learnerId") != null) {
+            sessionData.put("loggedIn", true);
+            sessionData.put("learnerId", session.getAttribute("learnerId"));
+            sessionData.put("learnerEmail", session.getAttribute("learnerEmail"));
+            sessionData.put("learnerName", session.getAttribute("learnerName"));
+        } else {
+            sessionData.put("loggedIn", false);
+        }
+
+        return ResponseEntity.ok(sessionData);
+    }
+
+    // Logout endpoint
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpSession session) {
+        session.invalidate(); // clears the session
+        return ResponseEntity.ok().build();
+    }
 }
+
+

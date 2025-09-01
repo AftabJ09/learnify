@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learnify Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        .card-img-top {
+            width: 415px;
+            height: 248px;
+            object-fit: cover;
+        }
+        #logoutBtn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">LEARNIFY</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Subjects</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <button id="logoutBtn" class="btn btn-danger">Logout</button>
+    </div>
+</nav>
+
+<div class="text-center mt-4">
+    <h1>Welcome to Learnify!</h1>
+    <div id="welcomeMessage" class="text-success fs-4 mt-2"></div>
+</div>
+
+<div class="container mt-4">
+    <center><h1>Get Started</h1></center>
+    <div class="row justify-content-center g-4">
+        <!-- Cards Example -->
+        <div class="col-md-4">
+            <div class="card h-100">
+                <img src="OS.png" class="card-img-top" alt="Operating System">
+                <div class="card-body">
+                    <h5 class="card-title">Operating System</h5>
+                    <p class="card-text">Learn the basics of Operating Systems.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <!-- Add more cards as needed -->
+    </div>
+</div>
+
+<footer class="bg-dark text-light py-3 mt-4">
+    <div class="container text-center">
+        <p class="mb-0">&copy; 2025 Learnify. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        try {
+            // Fetch session info from Spring Boot
+            const response = await fetch("http://localhost:8081/learner/session", {
+                credentials: "include" // important for sending session cookie
+            });
+
+            const sessionData = await response.json();
+            console.log("Session data:", sessionData); // output session info to console
+
+            if (!sessionData.loggedIn) {
+                alert("Please login to access the homepage.");
+                window.location.href = "loginPage.html";
+            } else {
+                document.getElementById("welcomeMessage").textContent = `Welcome, ${sessionData.learnerName}!`;
+            }
+        } catch (err) {
+            console.error("Error fetching session:", err);
+            alert("Error checking session. Please login again.");
+            window.location.href = "loginPage.html";
+        }
+
+        // Logout functionality
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+            try {
+                await fetch("http://localhost:8081/learner/logout", {
+                    method: "POST",
+                    credentials: "include"
+                });
+                localStorage.clear(); // optional: clear local storage if used
+                alert("Logged out successfully!");
+                window.location.href = "loginPage.html";
+            } catch (err) {
+                console.error("Logout error:", err);
+                alert("Failed to logout. Try again.");
+            }
+        });
+    });
+</script>
+</body>
+</html>
