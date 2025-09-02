@@ -181,3 +181,9 @@ async function deleteSection(sectionId, subjectId) {
     console.error("Error deleting section:", err);
   }
 }
+
+// Show sections in dashboard
+function showSection(id) {
+  document.querySelectorAll(".dashboard-section").forEach(sec => sec.classList.add("d-none"));
+  document.getElementById(id).classList.remove("d-none");
+}

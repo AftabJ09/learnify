@@ -27,4 +27,9 @@ public class Subjects {
     @OneToMany(mappedBy = "subjects", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Sections> sections;
+
+    @OneToMany(mappedBy = "subjects", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Quiz> quiz;
+
 }
