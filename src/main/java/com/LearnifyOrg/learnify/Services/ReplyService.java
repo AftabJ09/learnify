@@ -19,10 +19,16 @@ public class ReplyService {
     private QueryRepository queryRepository;
 
     public Reply addReply(Reply reply) {
-        // Fetch the full Query from DB
+        // Fetch query by ID
         Query query = queryRepository.findById(reply.getQuery().getQueryId())
                 .orElseThrow(() -> new RuntimeException("Query not found"));
 
+        // Validate subject match
+        if (!query.getSubjectName().equalsIgnoreCase(reply.getSubjectName())) {
+            throw new RuntimeException("Subject does not match the query's subject");
+        }
+
+        // Ensure correct association
         reply.setQuery(query);
         return replyRepository.save(reply);
     }
