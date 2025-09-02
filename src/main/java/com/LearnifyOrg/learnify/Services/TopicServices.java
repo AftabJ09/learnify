@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Base64;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -137,4 +138,45 @@ public class TopicServices {
         }
     }
 
+
+
+    // Existing methods (insertdata, updateTopic)...
+
+    public void deleteTopic(Long id) {
+        Optional<TopicContent> optionalTopic = topicRepository.findById(id);
+        if (optionalTopic.isEmpty()) {
+            throw new RuntimeException("Topic not found with id " + id);
+        }
+
+        TopicContent topic = optionalTopic.get();
+
+        try {
+            String contentJson = topic.getContent();
+            JsonNode root = objectMapper.readTree(contentJson);
+
+            if (root.has("ops") && root.get("ops").isArray()) {
+                for (JsonNode op : root.get("ops")) {
+                    if (op.has("insert") && op.get("insert").isObject()) {
+                        JsonNode insertNode = op.get("insert");
+                        if (insertNode.has("image")) {
+                            String imagePath = insertNode.get("image").asText();
+                            if (imagePath.startsWith("/uploads/")) {
+                                String fileName = imagePath.replace("/uploads/", "");
+                                File file = new File(UPLOAD_DIR + fileName);
+                                if (file.exists()) {
+                                    file.delete();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            topicRepository.deleteById(id);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error deleting topic and images", e);
+        }
+    }
 }
+

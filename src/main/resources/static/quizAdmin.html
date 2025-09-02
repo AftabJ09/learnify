@@ -5,9 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quiz Management</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .go-back-btn {
+      background-color: #0d6efd;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .go-back-btn:hover {
+      background-color: #084298;
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+
 </head>
 <body>
 <div class="container mt-5">
+  <!-- Go Back Button -->
+  <a href="http://localhost:8081/adminDashboard.html" class="go-back-btn">←Go Back to Admin DashBoard</a>
+
   <h2 class="mb-4">Quiz Management</h2>
 
   <!-- Subject Dropdown -->
@@ -67,3 +92,4 @@
 <script src="js/quiz.js"></script>
 </body>
 </html>
+

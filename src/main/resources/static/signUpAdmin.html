@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Signup Page For Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/signUpPage.css">
+    <link rel="stylesheet" href="css/signUpPage.css">
 </head>
 
 <body>
@@ -51,7 +51,7 @@
             };
 
             try {
-               const response = await fetch("http://localhost:8080/admin/addAdmin", {
+               const response = await fetch("http://localhost:8081/admin/addAdmin", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

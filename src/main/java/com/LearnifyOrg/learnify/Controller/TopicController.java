@@ -45,6 +45,12 @@ public class TopicController {
         return ResponseEntity.ok(topic);
     }
 
+    @DeleteMapping("/{id}")
+    public String deleteTopic(@PathVariable Long id){
+        topicServices.deleteTopic(id);
+        return "Topic deleted Successfully";
+    }
+
 }
 
 
