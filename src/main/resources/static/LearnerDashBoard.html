@@ -55,13 +55,15 @@
     <center><h1>Get Started</h1></center>
     <div class="row justify-content-center g-4">
         <!-- Cards Example -->
-        <div class="col-md-4">
-            <div class="card h-100">
-                <img src="OS.png" class="card-img-top" alt="Operating System">
-                <div class="card-body">
-                    <h5 class="card-title">Operating System</h5>
-                    <p class="card-text">Learn the basics of Operating Systems.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+        <div class="container my-5">
+
+
+            <!-- Container for subject cards -->
+            <div id="subjectCardsContainer" class="row">
+                <!-- Cards will be dynamically inserted here by JavaScript -->
+                <div class="col-12 text-center text-muted" id="loadingMessage">
+
+                    Loading subjects...
                 </div>
             </div>
         </div>
@@ -116,5 +118,6 @@
         });
     });
 </script>
+<script src="js/learnerDashboard.js"></script>
 </body>
 </html>

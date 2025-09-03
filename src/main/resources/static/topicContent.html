@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic Content</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            position: relative;
+            padding-top: 70px;
+        }
+
+        .navbar { background-color: #333 !important; }
+        .navbar-brand { color: #f5c518 !important; font-weight: bold; }
+
+        #backBtn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            background-color: #0d6efd;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+        }
+        #backBtn:hover { background-color: #0b5ed7; }
+
+        h1 { color: #f5c518; text-align: center; margin-top: 20px; }
+
+        #editor-container {
+            background-color: #fff; /* white background for content */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            min-height: 400px;
+            margin-top: 20px;
+            padding: 20px;
+            color: #000; /* default text color */
+        }
+
+        /* Quill content overrides */
+        .ql-editor {
+            background-color: #fff;
+            color: #000;
+        }
+        .ql-editor h1, .ql-editor h2, .ql-editor h3,
+        .ql-editor h4, .ql-editor h5, .ql-editor h6 {
+            color: #000;
+        }
+        .ql-editor p, .ql-editor li, .ql-editor span {
+            color: #000;
+        }
+        .ql-editor img {
+            max-width: 100%;
+            display: block;
+            margin: 10px auto;
+            border-radius: 5px;
+        }
+        .ql-editor pre {
+            background-color: #f5f5f5;
+            color: #000;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">LEARNIFY</a>
+        <button id="backBtn" class="btn">Back to Topics</button>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 id="topicTitle">Loading...</h1>
+    <div id="editor-container"></div>
+</div>
+
+<script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const topicId = urlParams.get('topicId');
+        const sectionId = urlParams.get('sectionId');
+        const sectionName = urlParams.get('sectionName');
+
+        const editorContainer = document.getElementById('editor-container');
+        const topicTitle = document.getElementById('topicTitle');
+        const backBtn = document.getElementById('backBtn');
+
+        const quill = new Quill(editorContainer, { theme: 'snow', readOnly: true, modules: { toolbar: false } });
+
+        backBtn.addEventListener('click', () => {
+            if (sectionId) {
+                window.location.href = `topics.html?sectionId=${sectionId}&sectionName=${encodeURIComponent(sectionName)}`;
+            } else {
+                window.history.back();
+            }
+        });
+
+        if (!topicId) {
+            alert('Invalid topic.');
+            window.history.back();
+            return;
+        }
+
+        try {
+            const res = await fetch(`http://localhost:8081/TopicContent/${topicId}`);
+            const topic = await res.json();
+
+            topicTitle.textContent = topic.topic || 'Untitled Topic';
+
+            if (topic.content) {
+                let delta = typeof topic.content === 'string' ? JSON.parse(topic.content) : topic.content;
+                quill.setContents(delta);
+            } else {
+                editorContainer.innerHTML = '<p>No content available.</p>';
+            }
+        } catch (err) {
+            console.error('Error loading topic:', err);
+            editorContainer.innerHTML = '<p>Failed to load content.</p>';
+            topicTitle.textContent = 'Error';
+        }
+    });
+</script>
+
+</body>
+</html>
