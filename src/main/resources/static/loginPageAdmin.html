@@ -12,7 +12,8 @@
 <h1 class="site-heading text-center">Welcome Back to Learnify!</h1>
 <div class="login-container">
   <h3 class="text-center mb-4">Login as Admin</h3>
-  <form>
+
+  <form id="loginForm">
     <div class="mb-3">
       <label for="email" class="form-label">Email address</label>
       <input type="email" class="form-control" id="email" placeholder="Enter email" required>
@@ -24,17 +25,49 @@
     </div>
 
     <div class="mb-3">
-      <label for="password" class="form-label">Passkey</label>
+      <label for="passkey" class="form-label">Passkey</label>
       <input type="password" class="form-control" id="passkey" placeholder="Enter passkey" required>
     </div>
 
     <button type="submit" class="btn btn-primary w-100">Login</button>
   </form>
 
-  <div class="signUp-link">
-    <p>Not an Admin? Well then you need a Passkey <a href="signUpAdmin.html">SignUp here</a></p>
+  <div class="signUp-link mt-3">
+    <p>Not an Admin? You need a Passkey <a href="signUpAdmin.html">Sign Up here</a></p>
   </div>
 </div>
+
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const loginData = {
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value,
+      passcode: document.getElementById("passkey").value
+    };
+
+    try {
+      const response = await fetch("http://localhost:8081/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginData)
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert("Login successful! Welcome " + result.name);
+        window.location.href = "adminDashboard.html"; // ✅ redirect on success
+      } else {
+        alert("Login failed: " + (result.message || "Invalid credentials"));
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Try again later.");
+    }
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>

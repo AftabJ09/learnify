@@ -33,8 +33,8 @@ public class AdminServices {
             throw new RuntimeException("Admin with this email already exists!");
         }
 
-        // Do not store passcode in DB (if you want it global only)
-        admin.setPasscode(null);
+        // ❌ Do not store passcode in DB (if you want it global only)
+        //admin.setPasscode(null);
 
         return adminRepository.save(admin);
     }
@@ -58,5 +58,7 @@ public class AdminServices {
         adminRepository.deleteById(admin_id);
     }
 
-
+    public Admin validateAdmin(String email, String password, String passcode) {
+        return adminRepository.findByEmailAndPasswordAndPasscode(email, password, passcode);
+    }
 }

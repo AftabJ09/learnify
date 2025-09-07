@@ -12,6 +12,10 @@
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
     <span class="navbar-brand mb-0 h1">Learnify Admin Dashboard</span>
+    <div class="d-flex ms-auto text-white align-items-center">
+      <span class="me-3">👤 Logged in as: <strong id="adminName"></strong></span>
+      <button class="btn btn-outline-light btn-sm" onclick="logoutAdmin()">Logout</button>
+    </div>
   </div>
 </nav>
 
@@ -20,12 +24,10 @@
   <div class="bg-dark text-white sidebar p-3">
     <h5 class="text-center mb-4">Menu</h5>
     <ul class="nav flex-column">
-
       <li class="nav-item"><a href="http://localhost:8081/quizAdmin.html" target="_blank" class="nav-link text-white">🎯 Manage Quiz</a></li>
       <li class="nav-item"><a href="http://localhost:8081/content.html" target="_blank" class="nav-link text-white">📝 Manage Topics</a></li>
       <li class="nav-item"><a href="http://localhost:8081/editContent.html" class="nav-link text-white" onclick="showSection('sections')">📖 Edit Topics</a></li>
-      <a href="http://localhost:8081/deleteTopic.html" class="nav-link text-white" onclick="showSection('sections')">🗑️ Delete Topics</a>
-
+      <li class="nav-item"><a href="http://localhost:8081/deleteTopic.html" class="nav-link text-white" onclick="showSection('sections')">🗑️ Delete Topics</a></li>
     </ul>
   </div>
 

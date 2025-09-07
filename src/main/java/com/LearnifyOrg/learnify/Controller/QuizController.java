@@ -1,6 +1,4 @@
 package com.LearnifyOrg.learnify.Controller;
-
-
 import com.LearnifyOrg.learnify.Entity.Quiz;
 import com.LearnifyOrg.learnify.Entity.Sections;
 import com.LearnifyOrg.learnify.Services.QuizServices;

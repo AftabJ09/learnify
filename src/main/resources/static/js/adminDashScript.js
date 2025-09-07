@@ -1,12 +1,55 @@
 const SUBJECT_URL = "http://localhost:8081/Subjects";
 const SECTION_URL = "http://localhost:8081/Sections";
+const SESSION_URL = "http://localhost:8081/admin/session";
+const LOGOUT_URL = "http://localhost:8081/admin/logout";
 
-// Load all subjects on page load
-fetchSubjects();
+// Load all subjects on page load + session check
+document.addEventListener("DOMContentLoaded", () => {
+  checkAdminSession();
+  fetchSubjects();
+});
+
+// ==================== SESSION FUNCTIONS ====================
+
+// Fetch admin session
+async function checkAdminSession() {
+  try {
+    const res = await fetch(SESSION_URL, {
+      method: "GET",
+      credentials: "include"
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch session");
+
+    const data = await res.json();
+    if (data.loggedIn) {
+      document.getElementById("adminName").textContent = data.adminName;
+    } else {
+      alert("Session expired. Please login again.");
+      window.location.href = "loginPageAdmin.html";
+    }
+  } catch (err) {
+    console.error("Session error:", err);
+    alert("Could not verify session. Redirecting to login.");
+    window.location.href = "loginPageAdmin.html";
+  }
+}
+
+// Logout admin
+async function logoutAdmin() {
+  try {
+    await fetch(LOGOUT_URL, {
+      method: "POST",
+      credentials: "include"
+    });
+  } catch (err) {
+    console.error("Logout error:", err);
+  }
+  window.location.href = "loginPageAdmin.html";
+}
 
 // ==================== SUBJECT FUNCTIONS ====================
 
-// Fetch all subjects
 async function fetchSubjects() {
   try {
     const res = await fetch(`${SUBJECT_URL}/All_Subjects`);
@@ -18,7 +61,6 @@ async function fetchSubjects() {
   }
 }
 
-// Render subjects table
 function renderSubjects(subjects) {
   const table = document.getElementById("subjectTable");
   table.innerHTML = "";
@@ -51,7 +93,6 @@ function renderSubjects(subjects) {
   });
 }
 
-// Add subject
 async function addSubject() {
   const name = document.getElementById("subjectName").value.trim();
   if (!name) return alert("Enter a subject name");
@@ -68,7 +109,6 @@ async function addSubject() {
   }
 }
 
-// Edit subject
 async function editSubject(id) {
   const newName = document.getElementById(`name-${id}`).value.trim();
   if (!newName) return alert("Name cannot be empty");
@@ -84,7 +124,6 @@ async function editSubject(id) {
   }
 }
 
-// Delete subject
 async function deleteSubject(id) {
   if (!confirm("Are you sure you want to delete this subject?")) return;
   try {
@@ -97,7 +136,6 @@ async function deleteSubject(id) {
 
 // ==================== SECTION FUNCTIONS ====================
 
-// Toggle sections row
 async function toggleSections(subjectId) {
   const sectionRow = document.getElementById(`sectionRow-${subjectId}`);
   if (sectionRow.style.display === "none") {
@@ -108,7 +146,6 @@ async function toggleSections(subjectId) {
   }
 }
 
-// Fetch sections for a subject
 async function fetchSections(subjectId) {
   try {
     const res = await fetch(`${SECTION_URL}/SectionsBySubject/${subjectId}`);
@@ -120,7 +157,6 @@ async function fetchSections(subjectId) {
   }
 }
 
-// Render sections
 function renderSections(subjectId, sections) {
   const table = document.getElementById(`sectionTable-${subjectId}`);
   table.innerHTML = "";
@@ -138,7 +174,6 @@ function renderSections(subjectId, sections) {
   });
 }
 
-// Add section under a subject
 async function addSection(subjectId) {
   const name = document.getElementById(`sectionName-${subjectId}`).value.trim();
   if (!name) return alert("Enter a section name");
@@ -155,7 +190,6 @@ async function addSection(subjectId) {
   }
 }
 
-// Edit section
 async function editSection(sectionId, subjectId) {
   const newName = document.getElementById(`secname-${sectionId}`).value.trim();
   if (!newName) return alert("Name cannot be empty");
@@ -171,7 +205,6 @@ async function editSection(sectionId, subjectId) {
   }
 }
 
-// Delete section
 async function deleteSection(sectionId, subjectId) {
   if (!confirm("Are you sure you want to delete this section?")) return;
   try {
@@ -182,7 +215,8 @@ async function deleteSection(sectionId, subjectId) {
   }
 }
 
-// Show sections in dashboard
+// ==================== UI SWITCH ====================
+
 function showSection(id) {
   document.querySelectorAll(".dashboard-section").forEach(sec => sec.classList.add("d-none"));
   document.getElementById(id).classList.remove("d-none");
