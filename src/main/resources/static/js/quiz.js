@@ -34,7 +34,9 @@ function fetchQuestions() {
         .then(response => response.json())
         .then(data => {
             questionsTable.innerHTML = '';
+
             data.forEach(q => {
+                console.log(q);
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${q.question}</td>

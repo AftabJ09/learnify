@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Page</title>
+</head>
+<body>
+<h2 id="subject-title"></h2>
+<p id="subject-id"></p>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const subjectId = urlParams.get('subjectId');
+      const subjectName = urlParams.get('subjectName') || 'Unknown Subject';
+
+      document.getElementById('subject-title').textContent = "Subject: " + subjectName;
+      document.getElementById('subject-id').textContent = "Subject ID: " + subjectId;
+    });
+</script>
+</body>
+</html>

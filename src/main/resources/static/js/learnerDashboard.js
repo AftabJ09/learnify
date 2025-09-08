@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             alert("Please login to access the homepage.");
             window.location.href = "loginPage.html";
         } else {
-            document.getElementById("welcomeMessage").textContent = `Welcome, ${sessionData.learnerName}!`;
+            document.getElementById("welcomeMessage").textContent =
+                `Welcome, ${sessionData.learnerName}!`;
         }
     } catch (err) {
         console.error("Error fetching session:", err);
@@ -52,12 +53,12 @@ async function fetchSubjects() {
         if (loadingMessage) loadingMessage.remove();
 
         if (!subjects || subjects.length === 0) {
-            container.innerHTML = '<div class="col-12 text-center text-muted">No subjects found</div>';
+            container.innerHTML =
+                '<div class="col-12 text-center text-muted">No subjects found</div>';
             return;
         }
 
         subjects.forEach(subject => {
-            // Use the correct field name from your backend response: subjectId
             const card = document.createElement('div');
             card.className = 'col-md-4 mb-4';
             card.innerHTML = `
@@ -69,13 +70,18 @@ async function fetchSubjects() {
                             data-name="${subject.subjectName}">
                             Start Learning
                         </button>
+                        <button class="btn btn-primary start-quiz-btn"
+                            data-id="${subject.subjectId}"
+                            data-name="${subject.subjectName}">
+                            Mock Test
+                        </button>
                     </div>
                 </div>
             `;
             container.appendChild(card);
         });
 
-        // Add click event to open sections
+        // Start Learning buttons
         document.querySelectorAll('.start-learning-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const subjectId = btn.getAttribute('data-id');
@@ -84,7 +90,26 @@ async function fetchSubjects() {
                     alert("Invalid subject selected");
                     return;
                 }
-                window.open(`sections.html?subjectId=${subjectId}&subjectName=${encodeURIComponent(subjectName)}`, '_blank');
+                window.open(
+                    `sections.html?subjectId=${subjectId}&subjectName=${encodeURIComponent(subjectName)}`,
+                    '_blank'
+                );
+            });
+        });
+
+        // Mock Test buttons
+        document.querySelectorAll('.start-quiz-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const subjectId = btn.getAttribute('data-id');
+                const subjectName = btn.getAttribute('data-name');
+                if (!subjectId) {
+                    alert("Invalid subject selected");
+                    return;
+                }
+                window.open(
+                    `MockTest.html?subjectId=${subjectId}&subjectName=${encodeURIComponent(subjectName)}`,
+                    '_blank'
+                );
             });
         });
 
