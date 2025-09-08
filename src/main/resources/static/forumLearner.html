@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Learnify Forum</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/forum.css"/>
+</head>
+<body class="text-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-gradient shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="#">Learnify Forum</a>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <!-- Replaced Home + Logout with Go Back -->
+                <li class="nav-item">
+                    <a href="http://localhost:8081/LearnerDashboard.html" class="nav-link go-back-btn">← Go Back to Dashboard</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container py-4">
+    <div class="row g-4">
+        <!-- Ask a new question -->
+        <div class="col-lg-4">
+            <div class="card shadow card-animate">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Ask a Question</h5>
+                    <form id="queryForm" class="vstack gap-3">
+                        <div>
+                            <label class="form-label">Subject</label>
+                            <select id="subjectSelect" class="form-select"></select>
+                        </div>
+                        <div>
+                            <label class="form-label">Your Question</label>
+                            <textarea id="queryText" class="form-control" rows="5" placeholder="Be specific and clear..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Post Your Question</button>
+                        <div id="formMsg" class="text-info small"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Browse Questions -->
+        <div class="col-lg-8">
+            <div class="card shadow card-animate">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title">Browse Questions</h5>
+                        <div class="d-flex gap-2">
+                            <select id="filterSubject" class="form-select"></select>
+                            <button id="loadBtn" class="btn btn-outline-light">Load</button>
+                        </div>
+                    </div>
+                    <div id="listMsg" class="text-info small"></div>
+                    <ul id="queryList" class="list-group list-group-flush"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-light py-3 mt-4">
+    <p class="mb-0">© 2025 Learnify · Built for learners</p>
+</footer>
+
+<!-- Bootstrap Bundle (JS + Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="js/forumLearner.js"></script>
+</body>
+</html>

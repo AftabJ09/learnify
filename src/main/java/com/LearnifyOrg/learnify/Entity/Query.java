@@ -15,7 +15,7 @@ public class Query {
     @Column(columnDefinition = "TEXT")
     private String query;
 
-    private String subjectName; // foreign key can also be mapped to Subject entity
+    private String subjectName;
 
     private int learnerId;
 

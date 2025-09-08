@@ -65,7 +65,7 @@
                     window.location.href = "loginPageAdmin.html"; // redirect to login
                 } else {
                     const errorMsg = await response.text();
-                    return alert(May be Account already exists );
+                    return alert("May be Account already exists");
                 }
             } catch (error) {
                 console.error("Error:", error);
