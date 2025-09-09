@@ -19,5 +19,8 @@ public class Query {
 
     private int learnerId;
 
+    @Transient  // not stored in DB, only for API response
+    private String learnerName;
+
     private boolean verify = false;
 }

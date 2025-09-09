@@ -20,9 +20,12 @@ public class Reply {
     @Column(nullable = false)
     private String subjectName;
 
+    @Transient  // not stored in DB
+    private String learnerName;
+
     private boolean verify = false;
 
-    @ManyToOne(fetch = FetchType.EAGER)  // <- fetch full query immediately
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "query_id", nullable = false)
     private Query query;
 }

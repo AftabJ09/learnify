@@ -2,6 +2,7 @@ package com.LearnifyOrg.learnify.Services;
 
 import com.LearnifyOrg.learnify.Entity.Query;
 import com.LearnifyOrg.learnify.Entity.Reply;
+import com.LearnifyOrg.learnify.Repository.LearnerRepository;
 import com.LearnifyOrg.learnify.Repository.QueryRepository;
 import com.LearnifyOrg.learnify.Repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +19,33 @@ public class ReplyService {
     @Autowired
     private QueryRepository queryRepository;
 
+    @Autowired
+    private LearnerRepository learnerRepository; // fetch learner names
+
     public Reply addReply(Reply reply) {
-        // Fetch query by ID
         Query query = queryRepository.findById(reply.getQuery().getQueryId())
                 .orElseThrow(() -> new RuntimeException("Query not found"));
 
-        // Validate subject match
         if (!query.getSubjectName().equalsIgnoreCase(reply.getSubjectName())) {
             throw new RuntimeException("Subject does not match the query's subject");
         }
 
-        // Ensure correct association
         reply.setQuery(query);
-        return replyRepository.save(reply);
+        Reply saved = replyRepository.save(reply);
+
+        // set learner name for response
+        learnerRepository.findById(reply.getLearnerId())
+                .ifPresent(l -> saved.setLearnerName(l.getName()));
+
+        return saved;
     }
 
-    // Delete reply if it belongs to the given learner
+    public List<Reply> getReplyBySubject(String subjectName) {
+        List<Reply> replies = replyRepository.findBySubjectName(subjectName);
+        replies.forEach(r -> learnerRepository.findById(r.getLearnerId())
+                .ifPresent(l -> r.setLearnerName(l.getName())));
+        return replies;
+    }
     public void deleteReply(int replyId, int learnerId) {
         Reply reply = replyRepository.findById(replyId)
                 .orElseThrow(() -> new RuntimeException("Reply not found"));
@@ -43,14 +55,5 @@ public class ReplyService {
         }
 
         replyRepository.deleteById(replyId);
-    }
-
-    // Get replies filtered by subject name
-    public List<Reply> getReplyBySubject(String subjectName) {
-        return replyRepository.findBySubjectName(subjectName);
-    }
-
-    public List<Reply> getAllReplies() {
-        return replyRepository.findAll();
     }
 }

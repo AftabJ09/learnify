@@ -15,16 +15,19 @@ public class ReplyController {
     @Autowired
     private ReplyService replyService;
 
+    // Add reply
     @PostMapping("/add")
     public ResponseEntity<Reply> addReply(@RequestBody Reply reply) {
         return ResponseEntity.ok(replyService.addReply(reply));
     }
 
-    @GetMapping("/all")
-    public List<Reply> getAllReplies() {
-        return replyService.getAllReplies();
+    // Get replies by subject
+    @GetMapping("/subject/{subjectName}")
+    public List<Reply> getReplyBySubject(@PathVariable String subjectName) {
+        return replyService.getReplyBySubject(subjectName);
     }
 
+    // Delete reply
     @DeleteMapping("/delete/{replyId}")
     public ResponseEntity<String> deleteReply(
             @PathVariable int replyId,
@@ -35,10 +38,5 @@ public class ReplyController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(403).body(e.getMessage());
         }
-    }
-
-    @GetMapping(value = "/subject/{subjectName}", produces = "application/json")
-    public List<Reply> getReplyBySubject(@PathVariable String subjectName) {
-        return replyService.getReplyBySubject(subjectName);
     }
 }

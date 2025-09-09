@@ -17,9 +17,7 @@ let currentLearner = null;
 
 async function loadSession() {
   try {
-    const res = await fetch(`${API_BASE}/learner/session`, {
-      credentials: "include" // send cookie
-    });
+    const res = await fetch(`${API_BASE}/learner/session`, { credentials: "include" });
     if (!res.ok) throw new Error("Failed to get session");
     currentLearner = await res.json();
     console.log("Logged-in learner:", currentLearner);
@@ -94,7 +92,7 @@ function renderQueries(items) {
     li.innerHTML = `
       <div class="query-head">
         <div>
-          <div class="query-meta">#${q.queryId} • Learner ${q.learnerId}</div>
+          <div class="query-meta">#${q.queryId} • ${q.learnerName}</div>
           <div class="query-text">${escapeHtml(q.query)}</div>
         </div>
         <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
@@ -160,7 +158,7 @@ function renderQueries(items) {
         reply: text,
         subjectName: form.dataset.subject,
         query: { queryId: parseInt(qid, 10) },
-        learnerId: currentLearner?.learnerId // attach learner ID
+        learnerId: currentLearner?.learnerId
       };
       try {
         const res = await fetch(`${API_BASE}/reply/add`, {
@@ -201,6 +199,7 @@ async function loadReplies(subjectName, queryId) {
     if (!res.ok) throw new Error("Failed replies fetch");
     const replies = await res.json();
 
+    // filter replies for this query
     const filtered = replies.filter(r => {
       const rid = r.query && r.query.queryId ? parseInt(r.query.queryId, 10) : null;
       return rid === parseInt(queryId, 10);
@@ -213,10 +212,11 @@ async function loadReplies(subjectName, queryId) {
       return;
     }
 
+    // **Render each reply**
     filtered.forEach(r => {
       const div = document.createElement("div");
       div.className = "reply-item";
-      const learnerLabel = `<div class="reply-meta">Learner ${r.learnerId} • ${r.verify ? "Verified" : "Unverified"}</div>`;
+      const learnerLabel = `<div class="reply-meta">${r.learnerName} • ${r.verify ? "✔ Verified" : "❌ Unverified"}</div>`;
       const text = `<div>${escapeHtml(r.reply)}</div>`;
       div.innerHTML = learnerLabel + text;
       container.appendChild(div);
@@ -243,7 +243,7 @@ els.form.addEventListener("submit", async e => {
   const payload = {
     query: queryText,
     subjectName,
-    learnerId: currentLearner?.learnerId // attach learner ID
+    learnerId: currentLearner?.learnerId
   };
   showMsg(els.formMsg, "Posting...");
   try {
@@ -283,7 +283,7 @@ els.loadBtn.addEventListener("click", () => {
   loadQueriesBySubject(subject);
 });
 
-/* ========= Helpers ========= */
+// ========= Helpers =========
 function escapeHtml(unsafe) {
   if (!unsafe && unsafe !== 0) return "";
   return String(unsafe)

@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ReplyRepository extends JpaRepository<Reply, Integer> {
     List<Reply> findBySubjectName(String subjectName);
+
+    List<Reply> findByQuery_QueryId(int queryId);
 }
