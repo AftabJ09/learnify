@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learnify Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px 60px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 30px;
+            color: #333;
+        }
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        .learner-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .admin-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+        p {
+            margin-top: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to Learnify</h1>
+    <button class="learner-btn" onclick="window.location.href='SignUpPage.html'">Sign Up as Learner</button>
+    <button class="admin-btn" onclick="window.location.href='SignUpAdmin.html'">Sign Up as Admin</button>
+    <p>Already have an account? Please login from the respective page.</p>
+</div>
+</body>
+</html>

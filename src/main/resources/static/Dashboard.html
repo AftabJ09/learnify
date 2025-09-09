@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    /* Subject filter */
+    #subject-filter {
+        margin-bottom: 20px;
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    /* Card grid */
+    #cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .quiz-card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+        background-color: #fff;
+    }
+
+    .quiz-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .quiz-card h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .quiz-card p {
+        margin: 4px 0;
+    }
+
+    .status {
+        font-weight: bold;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    .PASSED { background-color: green; }
+    .FAILED { background-color: red; }
+
+    /* Pagination */
+    #pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    #pagination button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #pagination button.active {
+        font-weight: bold;
+        background-color: #007BFF;
+        color: white;
+        border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Dashboard</h2>
+<select id="subject-filter">
+  <option value="all">All Subjects</option>
+</select>
+
+<div id="cards-container"></div>
+
+<div id="pagination"></div>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const learnerId = urlParams.get('learnerId') || 1;
+
+  let subjectsMap = {};
+  let allResults = [];
+  let filteredResults = [];
+  const cardsPerPage = 6;
+  let currentPage = 1;
+
+  // Fetch subjects
+  fetch('http://localhost:8081/Subjects/All_Subjects')
+      .then(res => res.json())
+      .then(subjects => {
+          subjects.forEach(s => {
+              subjectsMap[s.subjectId] = s.subjectName;
+              const option = document.createElement('option');
+              option.value = s.subjectId;
+              option.textContent = s.subjectName;
+              document.getElementById('subject-filter').appendChild(option);
+          });
+          fetchResults();
+      })
+      .catch(err => alert("Error fetching subjects: " + err));
+
+  // Fetch quiz results
+  function fetchResults() {
+      fetch(`http://localhost:8081/quizData/results?learnerId=${learnerId}`)
+          .then(res => res.json())
+          .then(data => {
+              allResults = data;
+              filteredResults = [...allResults];
+              renderPage(1);
+          })
+          .catch(err => alert("Error fetching results: " + err));
+  }
+
+  // Render cards for current page
+  function renderPage(page) {
+      currentPage = page;
+      const container = document.getElementById('cards-container');
+      container.innerHTML = '';
+
+      const start = (page - 1) * cardsPerPage;
+      const end = start + cardsPerPage;
+      const pageResults = filteredResults.slice(start, end);
+
+      pageResults.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'quiz-card';
+          card.innerHTML = `
+              <h3>${subjectsMap[p.subjectId] || 'Unknown Subject'}</h3>
+              <p>Score: ${p.score}</p>
+              <p>Total Questions: ${p.totalQuestions}</p>
+              <p>Correct Answers: ${p.correctAnswers}</p>
+              <p class="status ${p.status}">Status: ${p.status}</p>
+          `;
+          container.appendChild(card);
+      });
+
+      renderPagination();
+  }
+
+  // Render pagination buttons
+  function renderPagination() {
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+      const totalPages = Math.ceil(filteredResults.length / cardsPerPage);
+
+      for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement('button');
+          btn.textContent = i;
+          if (i === currentPage) btn.classList.add('active');
+          btn.addEventListener('click', () => renderPage(i));
+          pagination.appendChild(btn);
+      }
+  }
+
+  // Filter by subject
+  document.getElementById('subject-filter').addEventListener('change', (e) => {
+      const val = e.target.value;
+      filteredResults = val === 'all' ? [...allResults] : allResults.filter(r => r.subjectId == val);
+      renderPage(1);
+  });
+</script>
+
+</body>
+</html>

@@ -2,21 +2,138 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz Page</title>
+    <title>Mock Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        h2, h3 { margin-bottom: 5px; }
+        .question { border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; }
+        .options { margin-left: 20px; }
+        #timer { font-size: 18px; font-weight: bold; margin-bottom: 20px; color: red; }
+        button { padding: 10px 20px; font-size: 16px; }
+    </style>
 </head>
 <body>
-<h2 id="subject-title"></h2>
+
+<h2 id="subject-title">Subject: </h2>
 <p id="subject-id"></p>
+<div id="timer"></div>
+<div id="quiz-container"></div>
+<button id="submit-btn">Submit Quiz</button>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const subjectId = urlParams.get('subjectId');
-      const subjectName = urlParams.get('subjectName') || 'Unknown Subject';
+    const urlParams = new URLSearchParams(window.location.search);
+    const learnerId = urlParams.get('learnerId') || 1;
+    const subjectId = urlParams.get('subjectId');
+    const subjectName = urlParams.get('subjectName') || 'Unknown Subject';
 
-      document.getElementById('subject-title').textContent = "Subject: " + subjectName;
-      document.getElementById('subject-id').textContent = "Subject ID: " + subjectId;
-    });
+    document.getElementById('subject-title').textContent = "Subject: " + subjectName;
+    document.getElementById('subject-id').textContent = "Subject ID: " + subjectId;
+
+    const ANSWER_STORAGE_KEY = `quiz_${learnerId}_${subjectId}_answers`;
+    const START_TIME_KEY = `quiz_${learnerId}_${subjectId}_startTime`;
+
+    let questions = [];
+    let endTime = null;
+    let timerInterval = null;
+
+    // Save start time if not exists
+    if (!localStorage.getItem(START_TIME_KEY)) {
+        localStorage.setItem(START_TIME_KEY, Date.now());
+    }
+
+    function fetchQuiz() {
+        fetch(`http://localhost:8081/quizData/start?learnerId=${learnerId}&subjectId=${subjectId}`)
+            .then(res => res.json())
+            .then(data => {
+                questions = data.questions || [];
+                endTime = data.endTime ? new Date(data.endTime) : new Date(Date.now() + questions.length * 60 * 1000);
+                renderQuiz();
+                startTimer();
+            })
+            .catch(err => alert("Error fetching quiz: " + err));
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+        const savedAnswers = JSON.parse(localStorage.getItem(ANSWER_STORAGE_KEY) || '{}');
+
+        questions.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question';
+            div.innerHTML = `
+                <h3>Q${idx+1}: ${q.question}</h3>
+                <div class="options">
+                    <label><input type="radio" name="${q.quiz_Id}" value="${q.optionA}"> ${q.optionA}</label><br>
+                    <label><input type="radio" name="${q.quiz_Id}" value="${q.optionB}"> ${q.optionB}</label><br>
+                    <label><input type="radio" name="${q.quiz_Id}" value="${q.optionC}"> ${q.optionC}</label><br>
+                    <label><input type="radio" name="${q.quiz_Id}" value="${q.optionD}"> ${q.optionD}</label>
+                </div>
+            `;
+            container.appendChild(div);
+
+            if (savedAnswers[q.quiz_Id]) {
+                const input = div.querySelector(`input[value="${savedAnswers[q.quiz_Id]}"]`);
+                if (input) input.checked = true;
+            }
+        });
+
+        document.querySelectorAll('input[type=radio]').forEach(input => {
+            input.addEventListener('change', () => {
+                const answers = JSON.parse(localStorage.getItem(ANSWER_STORAGE_KEY) || '{}');
+                answers[input.name] = input.value;
+                localStorage.setItem(ANSWER_STORAGE_KEY, JSON.stringify(answers));
+            });
+        });
+    }
+
+    function startTimer() {
+        const timerEl = document.getElementById('timer');
+
+        timerInterval = setInterval(() => {
+            const now = new Date();
+            let remaining = Math.max(0, Math.floor((endTime - now)/1000));
+            const minutes = Math.floor(remaining/60);
+            const seconds = remaining % 60;
+            timerEl.textContent = `Time Left: ${minutes} min ${seconds} sec`;
+
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                alert("Time is over! Redirecting to Dashboard...");
+                // Clear answers but do NOT submit
+                localStorage.removeItem(ANSWER_STORAGE_KEY);
+                localStorage.removeItem(START_TIME_KEY);
+                window.location.href = `Dashboard.html?learnerId=${learnerId}`;
+            }
+        }, 1000);
+
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            clearInterval(timerInterval);
+            submitQuiz();
+        });
+    }
+
+    function submitQuiz() {
+        const answers = JSON.parse(localStorage.getItem(ANSWER_STORAGE_KEY) || '{}');
+        const startTime = parseInt(localStorage.getItem(START_TIME_KEY)) || Date.now();
+        const timeTaken = Math.floor((Date.now() - startTime) / 1000); // seconds
+
+        fetch(`http://localhost:8081/quizData/submit?learnerId=${learnerId}&subjectId=${subjectId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(answers)
+        })
+        .then(res => res.json())
+        .then(result => {
+            localStorage.removeItem(ANSWER_STORAGE_KEY);
+            localStorage.removeItem(START_TIME_KEY);
+            // Redirect to dashboard with score and time taken
+            window.location.href = `Dashboard.html?learnerId=${learnerId}&score=${result.score}&total=${result.totalQuestions}&timeTaken=${timeTaken}`;
+        })
+        .catch(err => alert("Error submitting quiz: " + err));
+    }
+
+    fetchQuiz();
 </script>
 </body>
 </html>
