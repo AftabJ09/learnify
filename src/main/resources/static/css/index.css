@@ -1,126 +1,173 @@
-/* ---------------- Body & Animated Gradient Background ---------------- */
+/* ----------- Global ----------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-    background: linear-gradient(270deg, #000000, #2f2f2f, #555555, #000000);
-    background-size: 1600% 1600%;
-    animation: gradientBG 20s ease infinite;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: #f4f4f9;
+  background: linear-gradient(135deg, #1e1e2f, #12121c, #2c2c54);
+  background-size: 400% 400%;
+  animation: bgShift 6s ease infinite;
+  overflow-x: hidden;
 }
 
-/* Gradient Animation */
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 50% 100%; }
-    50% { background-position: 100% 50%; }
-    75% { background-position: 50% 0%; }
-    100% { background-position: 0% 50%; }
+@keyframes bgShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* ---------------- Navbar ---------------- */
+/* ----------- Navbar ----------- */
 .navbar {
-    background-color: rgba(0,0,0,0.7) !important;
+  background: rgba(20, 20, 30, 0.85) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-.navbar-brand,
+.navbar-brand {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  color: #00e0ff !important;
+  letter-spacing: 1px;
+}
 .nav-link {
-    color: #fff !important;
-    font-weight: bold;
+  position: relative;
+  color: #ddd !important;
+  transition: color 0.3s ease;
 }
 .nav-link:hover {
-    color: #f5c518 !important;
+  color: #00e0ff !important;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0%; height: 2px;
+  background: #00e0ff;
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
 }
 .navbar-toggler {
-    border-color: #fff;
+  border-color: #00e0ff;
 }
 
-/* ---------------- Headings ---------------- */
+/* ----------- Headings ----------- */
 h1, h5 {
-    color: #f5c518;
+  color: #00e0ff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
 }
 
-/* ---------------- Cards ---------------- */
+/* ----------- Cards ----------- */
 .card {
-    background-color: rgba(38,38,38,0.8);
-    border: 1px solid #fff;
-    color: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-}
-
-/* Gradient glowing effect for cards */
-.card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, #f5c518, #ff6a00, #00c3ff, #ff00ff);
-    background-size: 400% 400%;
-    filter: blur(30px);
-    opacity: 0;
-    transition: opacity 0.3s ease, transform 0.5s ease;
-    z-index: 0;
-}
-
-/* Glow effect on hover */
-.card:hover::before {
-    opacity: 1;
-    animation: cardGlow 5s ease infinite;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
 }
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(245,197,24,0.7);
-    border-color: transparent;
-    z-index: 1;
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0,224,255,0.25);
+  border-color: transparent;
 }
 
-/* Keep content above glow */
+/* Glowing gradient animation for cards */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, #00e0ff, #7b2ff7, #ff00ff, #00c3ff);
+  background-size: 400% 400%;
+  filter: blur(40px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+.card:hover::before {
+  opacity: 1;
+  animation: cardGlow 5s ease infinite;
+}
 .card > * {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 }
-
-/* Card title */
-.card-title {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Buttons inside cards */
-.card .btn-primary {
-    background-color: #f5c518;
-    border: none;
-    color: #000;
-    font-weight: bold;
-}
-.card .btn-primary:hover {
-    background-color: #e0b500;
-}
-
-/* Gradient Animation for card glow */
 @keyframes cardGlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* ---------------- Footer ---------------- */
-footer {
-    background-color: rgba(0,0,0,0.7) !important;
-    color: #fff !important;
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Card images */
 .card-img-top {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
 }
+
+/* ----------- Buttons ----------- */
+.btn-primary {
+  background: linear-gradient(45deg, #00e0ff, #7b2ff7);
+  border: none;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(123,47,247,0.4);
+}
+.btn-outline-light {
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+.btn-outline-light:hover {
+  background: #00e0ff;
+  color: #000 !important;
+  border-color: transparent;
+}
+
+/* Delete buttons */
+.btn-danger {
+  background: linear-gradient(45deg, #ff4b5c, #f9d423);
+  color: #fff;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.btn-danger:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255,75,92,0.4);
+}
+
+/* ----------- Footer ----------- */
+footer {
+  background: rgba(20,20,30,0.9) !important;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  color: #ccc !important;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* ----------- Messages ----------- */
+.ok { color: #00ffb3; }
+.err { color: #ff4b5c; }

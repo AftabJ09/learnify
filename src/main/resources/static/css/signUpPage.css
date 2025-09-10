@@ -1,53 +1,125 @@
+/* ----------- Fonts ----------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600&display=swap');
+
+/* ----------- Body & Background ----------- */
 body {
-    background-color: #1e1e1e;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Inter', sans-serif;
+    color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e1e2f, #12121c, #2c2c54);
+    background-size: 400% 400%;
+    animation: bgShift 6s ease infinite;
+    overflow-x: hidden;
 }
 
+@keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ----------- Heading ----------- */
 .site-heading {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #ffc107;
+    color: #00e0ff;
     margin-top: 30px;
     margin-bottom: 20px;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    text-shadow: 0 0 4px rgba(0,224,255,0.4), 1px 1px 2px rgba(0,0,0,0.3);
+    font-family: 'Poppins', sans-serif;
 }
 
+/* ----------- Signup Container ----------- */
 .signup-container {
     max-width: 400px;
     margin: 50px auto;
-    background: #2c2c2c;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
     padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-    color: white;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0,224,255,0.15);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.signup-container:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 8px 20px rgba(0,224,255,0.2);
+    border-color: rgba(255,255,255,0.1);
+}
+
+.signup-container::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, #00e0ff, #7b2ff7, #ff00ff, #00c3ff);
+    background-size: 400% 400%;
+    filter: blur(20px);
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.signup-container:hover::before {
+    opacity: 0.25;
+    animation: cardGlow 8s ease infinite;
+}
+
+.signup-container > * {
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes cardGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ----------- Form Labels & Inputs ----------- */
 .form-label {
-    color: #ffc107;
+    color: #00e0ff;
+    font-weight: 600;
 }
 
 .form-control {
-    background-color: #3a3a3a;
+    background-color: rgba(58,58,58,0.9);
     color: white;
-    border: 1px solid #555;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 10px;
+    transition: all 0.2s ease;
 }
 
 .form-control:focus {
-    box-shadow: none;
-    border-color: #ffc107;
+    box-shadow: 0 0 4px rgba(0,224,255,0.25);
+    border-color: #00e0ff;
+    outline: none;
 }
 
+/* ----------- Buttons ----------- */
 .btn-primary {
-    background-color: #ffc107;
+    background: linear-gradient(45deg, #00e0ff, #7b2ff7);
     border: none;
-    color: black;
-    font-weight: bold;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-primary:hover {
-    background-color: #e0a800;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(123,47,247,0.2);
 }
 
+/* ----------- Login Link ----------- */
 .login-link {
     text-align: center;
     margin-top: 15px;
@@ -55,8 +127,9 @@ body {
 }
 
 .login-link a {
-    color: #ffc107;
+    color: #00e0ff;
     text-decoration: none;
+    font-weight: 600;
 }
 
 .login-link a:hover {
