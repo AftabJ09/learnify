@@ -5,82 +5,116 @@
   <title>Dashboard</title>
   <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Segoe UI', Arial, sans-serif;
         max-width: 1200px;
         margin: auto;
-        padding: 20px;
+        padding: 30px;
+        background: #f5f7fb;
+        color: #333;
     }
 
     h2 {
         text-align: center;
+        font-size: 28px;
+        margin-bottom: 25px;
+        color: #2c3e50;
     }
 
     /* Subject filter */
     #subject-filter {
-        margin-bottom: 20px;
-        padding: 8px;
+        margin-bottom: 25px;
+        padding: 10px 14px;
         font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        transition: border 0.2s ease;
+    }
+
+    #subject-filter:focus {
+        border-color: #3498db;
+        outline: none;
     }
 
     /* Card grid */
     #cards-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
+        gap: 25px;
     }
 
     .quiz-card {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        transition: transform 0.2s;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 20px;
         background-color: #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .quiz-card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.12);
     }
 
     .quiz-card h3 {
         margin-top: 0;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        font-size: 20px;
+        color: #34495e;
     }
 
     .quiz-card p {
-        margin: 4px 0;
+        margin: 6px 0;
+        font-size: 15px;
+        color: #555;
     }
 
     .status {
+        display: inline-block;
         font-weight: bold;
         color: white;
-        padding: 2px 6px;
-        border-radius: 4px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-size: 14px;
     }
 
-    .PASSED { background-color: green; }
-    .FAILED { background-color: red; }
+    .PASSED { background: linear-gradient(135deg, #27ae60, #219150); }
+    .FAILED { background: linear-gradient(135deg, #e74c3c, #c0392b); }
 
     /* Pagination */
     #pagination {
-        margin-top: 20px;
+        margin-top: 30px;
         text-align: center;
     }
 
     #pagination button {
-        margin: 0 5px;
-        padding: 5px 10px;
-        font-size: 16px;
+        margin: 0 6px;
+        padding: 8px 14px;
+        font-size: 15px;
         cursor: pointer;
+        border: 1px solid #3498db;
+        background: #fff;
+        color: #3498db;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+    #pagination button:hover {
+        background: #3498db;
+        color: white;
     }
 
     #pagination button.active {
         font-weight: bold;
-        background-color: #007BFF;
+        background: #2980b9;
         color: white;
-        border-radius: 4px;
+        border-color: #2980b9;
     }
   </style>
+
 </head>
 <body>
 
