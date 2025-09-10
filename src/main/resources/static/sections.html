@@ -6,25 +6,55 @@
   <title>Subject Sections</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* --- General Theme --- */
+    /* ----------- Fonts ----------- */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600&display=swap');
+
+    /* ----------- Body & Background ----------- */
     body {
-        background-color: #1a1a1a;
-        color: #f5f5f5;
-        font-family: Arial, sans-serif;
-        position: relative;
+        font-family: 'Inter', sans-serif;
+        color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1e1e2f, #12121c, #2c2c54);
+        background-size: 400% 400%;
+        animation: bgShift 6s ease infinite;
         padding-top: 70px; /* Space for navbar */
+        overflow-x: hidden;
     }
 
-    /* Navbar */
+    @keyframes bgShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* ----------- Navbar ----------- */
     .navbar {
-        background-color: #333 !important;
+        background: rgba(255,255,255,0.06) !important;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     }
-    .navbar-brand, .nav-link { color: #f5c518 !important; font-weight: bold; }
 
-    /* Headings */
-    h1 { color: #f5c518; }
+    .navbar-brand,
+    .nav-link {
+        color: #00e0ff !important;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        text-shadow: 0 0 4px rgba(0,224,255,0.3);
+    }
 
-    /* Roadmap */
+    /* ----------- Heading ----------- */
+    h1 {
+        color: #00e0ff;
+        font-size: 2rem;
+        margin-top: 20px;
+        font-weight: 600;
+        text-shadow: 0 0 4px rgba(0,224,255,0.4), 1px 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* ----------- Roadmap ----------- */
     .roadmap {
         display: flex;
         align-items: center;
@@ -33,22 +63,62 @@
         margin-top: 50px;
         flex-wrap: wrap;
     }
+
     .roadmap-step {
         text-align: center;
         padding: 15px 20px;
-        border-radius: 10px;
-        background-color: #262626;
-        border: 1px solid #444;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
         min-width: 120px;
         position: relative;
-        transition: transform 0.2s, background-color 0.2s;
-        color: #f5f5f5;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        color: #f4f4f9;
         font-weight: bold;
         cursor: pointer;
+        box-shadow: 0 3px 8px rgba(0,224,255,0.1);
     }
-    .roadmap-step:hover { transform: scale(1.05); background-color: #333; }
-    .roadmap-step.bg-success { background-color: #28a745; color: #fff; }
-    .roadmap-step.bg-danger { background-color: #dc3545; color: #fff; }
+
+    .roadmap-step:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0,224,255,0.2);
+        border-color: rgba(0,224,255,0.25);
+    }
+
+    /* Gradient text utility */
+    .gradient-text {
+        background: linear-gradient(90deg, #ffffff, #c0c0c0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* Special colors for start & end */
+    .roadmap-step.bg-success {
+        background: linear-gradient(45deg, #00e676, #00c853);
+        border: none;
+    }
+    .roadmap-step.bg-success span {
+        display: inline-block;
+        background: linear-gradient(90deg, #ffffff, #c0c0c0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .roadmap-step.bg-danger {
+        background: linear-gradient(45deg, #ff1744, #d50000);
+        border: none;
+    }
+    .roadmap-step.bg-danger span {
+        display: inline-block;
+        background: linear-gradient(90deg, #ffffff, #c0c0c0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Step arrows */
     .roadmap-step::after {
         content: '→';
         position: absolute;
@@ -56,22 +126,29 @@
         top: 50%;
         transform: translateY(-50%);
         font-size: 20px;
-        color: #f5c518;
+        color: #00e0ff;
     }
     .roadmap-step:last-child::after { content: ''; }
 
-    /* Back button */
+    /* ----------- Back Button ----------- */
     #backBtn {
         position: absolute;
         top: 15px;
         right: 15px;
         z-index: 10;
-        background-color: #0d6efd;
+        background: linear-gradient(45deg, #00e0ff, #7b2ff7);
         border: none;
         color: #fff;
         font-weight: bold;
+        border-radius: 8px;
+        padding: 8px 16px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    #backBtn:hover { background-color: #0b5ed7; }
+
+    #backBtn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(123,47,247,0.2);
+    }
   </style>
 </head>
 <body>
@@ -84,7 +161,7 @@
 </nav>
 
 <div class="container text-center">
-  <h1 id="subjectTitle" class="mt-4"></h1>
+  <h1 id="subjectTitle"></h1>
   <div id="roadmap" class="roadmap"></div>
 </div>
 
@@ -113,7 +190,7 @@
       // Start step
       const startStep = document.createElement('div');
       startStep.className = 'roadmap-step bg-success';
-      startStep.textContent = 'Start';
+      startStep.innerHTML = '<span>Start</span>';
       roadmapContainer.appendChild(startStep);
 
       try {
@@ -123,10 +200,10 @@
           if (!Array.isArray(sections) || sections.length === 0) {
               const noSection = document.createElement('div');
               noSection.textContent = 'No sections found for this subject';
-              noSection.className = 'text-muted mt-3';
+              noSection.className = 'gradient-text mt-3';
               roadmapContainer.appendChild(noSection);
           } else {
-              // Add sections and make clickable
+              // Add sections
               sections.forEach(sec => {
                   const step = document.createElement('div');
                   step.className = 'roadmap-step';
@@ -141,14 +218,14 @@
           // End step
           const endStep = document.createElement('div');
           endStep.className = 'roadmap-step bg-danger';
-          endStep.textContent = 'End';
+          endStep.innerHTML = '<span>End</span>';
           roadmapContainer.appendChild(endStep);
 
       } catch (error) {
           console.error('Error fetching sections:', error);
           const errorMsg = document.createElement('div');
           errorMsg.textContent = 'Failed to load sections. Please try again later.';
-          errorMsg.className = 'text-danger mt-3';
+          errorMsg.className = 'gradient-text mt-3';
           roadmapContainer.appendChild(errorMsg);
       }
   });

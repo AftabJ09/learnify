@@ -18,9 +18,8 @@
         <a class="navbar-brand fw-bold text-primary" href="#">Learnify Forum</a>
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
-                <!-- Replaced Home + Logout with Go Back -->
                 <li class="nav-item">
-                    <a href="http://localhost:8081/LearnerDashboard.html" class="nav-link go-back-btn">← Go Back to Dashboard</a>
+                    <a href="http://localhost:8081/LearnerDashBoard.html" class="nav-link go-back-btn">← Go Back to Dashboard</a>
                 </li>
             </ul>
         </div>
@@ -29,9 +28,9 @@
 
 <main class="container py-4">
     <div class="row g-4">
-        <!-- Ask a new question -->
+        <!-- Ask a new question (glowing card) -->
         <div class="col-lg-4">
-            <div class="card shadow card-animate">
+            <div class="card shadow card-animate glow">
                 <div class="card-body">
                     <h5 class="card-title mb-3">Ask a Question</h5>
                     <form id="queryForm" class="vstack gap-3">
@@ -50,9 +49,9 @@
             </div>
         </div>
 
-        <!-- Browse Questions -->
+        <!-- Browse Questions (smoky card) -->
         <div class="col-lg-8">
-            <div class="card shadow card-animate">
+            <div class="card shadow card-animate browse-card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="card-title">Browse Questions</h5>
@@ -74,7 +73,7 @@
     <p class="mb-0">© 2025 Learnify · Built for learners</p>
 </footer>
 
-<!-- Bootstrap Bundle (JS + Popper) -->
+<!-- Bootstrap Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Custom JS -->
 <script src="js/forumLearner.js"></script>
