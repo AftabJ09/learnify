@@ -1,10 +1,10 @@
-# Learnify 📘
+# Learnify 
 
 Learnify is a **Java Spring Boot based Learning Management System (LMS)** that helps learners and admins manage courses, quizzes, queries, and discussions in a structured way. It follows a layered architecture (Controller → Service → Repository → Entity) and integrates both backend (Spring Boot) and frontend (HTML, CSS, JS) for a complete learning platform.
 
 ---
 
-## 🚀 Features
+##  Features
 
 * **User Roles**
 
@@ -38,7 +38,7 @@ Learnify is a **Java Spring Boot based Learning Management System (LMS)** that h
 
 ---
 
-## 🏗️ Project Structure
+##  Project Structure
 
 ```
 learnify/
@@ -59,7 +59,7 @@ learnify/
 
 ---
 
-## ⚙️ Tech Stack
+##  Tech Stack
 
 * **Backend:** Spring Boot, Spring Security, Spring Data JPA
 * **Frontend:** HTML, CSS, JavaScript, Bootstrap
@@ -68,7 +68,7 @@ learnify/
 
 ---
 
-## 🛠️ Setup & Installation
+##  Setup & Installation
 
 1. Clone the repository:
 
@@ -101,9 +101,9 @@ learnify/
 
 ---
 
-## 📡 API Endpoints Reference
+##  API Endpoints Reference
 
-### 🔑 Authentication & Learners (`LearnerController`)
+###  Authentication & Learners (`LearnerController`)
 
 * `POST /learners/register` → Register new learner
 * `POST /learners/login` → Login with email & password
@@ -111,14 +111,14 @@ learnify/
 * `PUT /learners/{id}` → Update learner profile
 * `DELETE /learners/{id}` → Delete learner
 
-### 👨‍💼 Admin (`AdminController`)
+###  Admin (`AdminController`)
 
 * `POST /admin/register` → Register new admin
 * `POST /admin/login` → Admin login
 * `GET /admin/learners` → Get list of learners
 * `DELETE /admin/learner/{id}` → Remove learner
 
-### 📚 Subjects & Sections (`SubjectController`, `SectionController`)
+###  Subjects & Sections (`SubjectController`, `SectionController`)
 
 * `GET /subjects` → Get all subjects
 * `POST /subjects` → Add a new subject
@@ -127,35 +127,35 @@ learnify/
 * `GET /sections/{subjectId}` → Get all sections under a subject
 * `POST /sections` → Add new section
 
-### 📝 Topics (`TopicController`)
+###  Topics (`TopicController`)
 
 * `GET /topics/{sectionId}` → Get topics by section
 * `POST /topics` → Add new topic
 * `PUT /topics/{id}` → Edit topic
 * `DELETE /topics/{id}` → Delete topic
 
-### 🎯 Quizzes (`QuizController`, `QuizDataController`)
+###  Quizzes (`QuizController`, `QuizDataController`)
 
 * `GET /quizzes/{topicId}` → Get quizzes for a topic
 * `POST /quizzes` → Create a new quiz
 * `POST /quizzes/submit` → Submit quiz answers
 * `GET /quizzes/results/{learnerId}` → Get learner’s quiz results
 
-### ❓ Queries & Replies (`QueryController`, `ReplyController`)
+###  Queries & Replies (`QueryController`, `ReplyController`)
 
 * `POST /queries` → Post a query
 * `GET /queries` → Get all queries
 * `POST /queries/{id}/reply` → Add reply to query
 * `GET /queries/{id}/replies` → Get replies for a query
 
-### 📊 Progress (`ProgressRepository`)
+###  Progress (`ProgressRepository`)
 
 * `GET /progress/{learnerId}` → Get learner’s progress
 * `POST /progress` → Save/update progress
 
 ---
 
-## 📂 Important Modules
+##  Important Modules
 
 * **Controllers:** REST APIs to handle requests.
 * **Services:** Business logic layer.
@@ -165,7 +165,7 @@ learnify/
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please fork the repo and submit a PR for review.
 
